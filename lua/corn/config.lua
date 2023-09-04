@@ -15,7 +15,8 @@ M.default_opts = {
     hint = "H",
     info = "I",
   },
-  disable_virtual_text = true,
+  on_toggle = function(is_hidden)
+  end,
 }
 
 M.opts = {}

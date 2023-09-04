@@ -12,11 +12,6 @@ M.setup = function(opts)
   -- setup renderer
   renderer.setup()
 
-  -- disable virtual text
-  if config.opts.disable_virtual_text then
-    vim.diagnostic.config({ virtual_text = false })
-  end
-
   -- setup auto_cmds
   if config.opts.auto_cmds then
     vim.api.nvim_create_autocmd({
@@ -39,11 +34,6 @@ end
 
 -- TODO: make a single Corn commands with autocompleted sub commands
 function M.toggle()
-  -- disable virtual text, but only if it was enabled
-  if config.opts.disable_virtual_text then
-    utils.toggle_virtual_text()
-  end
-
   renderer.toggle_hide()
 end
 vim.api.nvim_create_user_command("CornToggle", M.toggle, {})

@@ -1,4 +1,5 @@
 local utils = require 'corn.utils'
+local config = require 'corn.config'
 
 local M = {}
 
@@ -34,6 +35,8 @@ end
 
 M.toggle_hide = function()
   M.is_hidden = not M.is_hidden
+
+  config.opts.on_toggle(M.is_hidden)
 end
 
 M.render = function(items)

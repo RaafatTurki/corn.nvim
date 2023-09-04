@@ -42,8 +42,4 @@ M.diag_severity_to_icon = function(severity)
   return look_up[severity] or '-'
 end
 
-M.toggle_virtual_text = function ()
-  vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
-end
-
 return M

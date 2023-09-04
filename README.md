@@ -50,6 +50,11 @@ require 'corn'.setup {
     hint = "H",
     info = "I",
   },
+
+  -- a hook that executes each time corn is toggled. the current state is provided via `is_hidden`
+  on_toggle = function(is_hidden)
+    -- e.g., toggle virtual text diagnostics
+  end,
 }
 ```
 
