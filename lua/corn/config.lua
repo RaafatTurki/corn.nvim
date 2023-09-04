@@ -15,6 +15,7 @@ M.default_opts = {
     hint = "H",
     info = "I",
   },
+  disable_virtual_text = true,
 }
 
 M.opts = {}
