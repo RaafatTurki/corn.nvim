@@ -32,7 +32,7 @@ or their vim cmds
 ```lua
 -- defaults
 require 'corn'.setup {
-  -- enable plugin auto commands
+  -- enables plugin auto commands
   auto_cmds = true,
 
   -- sorts diagnostics according to one of `severity`, `severity_reverse`, `column` or `column_reverse`

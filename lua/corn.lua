@@ -15,13 +15,11 @@ M.setup = function(opts)
   -- setup auto_cmds
   if config.opts.auto_cmds then
     vim.api.nvim_create_autocmd({
+      "DiagnosticChanged",
       "CursorMoved",
       "CursorMovedI",
       "TextChanged",
       "TextChangedI",
-      "WinNew",
-      "WinClosed",
-      -- "WinEnter",
       "WinResized",
     }, {
       group = vim.api.nvim_create_augroup("corn", {}),
