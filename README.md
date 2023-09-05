@@ -19,12 +19,16 @@ require 'corn'.setup()
 
 ## Use
 ```lua
-require 'corn'.toggle()    -- toggle visiblity
-require 'corn'.render()    -- manually invoke the renderer
+require 'corn'.toggle()             -- toggle visiblity
+require 'corn'.scope(scope_type)    -- change scope type
+require 'corn'.scope_cycle()        -- cycle scope type
+require 'corn'.render()             -- manually invoke the renderer
 ```
 or their vim cmds
 ```
 :CornToggle
+:CornScope
+:CornScopeCycle
 :CornRender
 ```
 
@@ -35,8 +39,11 @@ require 'corn'.setup {
   -- enables plugin auto commands
   auto_cmds = true,
 
-  -- sorts diagnostics according to one of `severity`, `severity_reverse`, `column` or `column_reverse`
+  -- sorts diagnostics according to a criteria. must be one of `severity`, `severity_reverse`, `column`, `column_reverse`, `line_number` or `line_number_reverse`
   sort_method = 'severity',
+
+  -- sets the scope to be searched for diagnostics, must be one of `line` or `file`
+  scope = 'line',
 
   -- highlights to use for each diagnostic severity level
   highlights = {
@@ -81,5 +88,4 @@ require 'corn'.setup {
 
 ## Plans
 - [ ] Add a custom renderering config opt for both the window and line contents
-- [ ] Add `:CornScope current_line` & `:CornScope all`
 - [ ] Add a truncated/squashed rendering mode when there isn't enough space

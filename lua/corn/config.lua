@@ -4,6 +4,7 @@ local M = {}
 M.default_opts = {
   auto_cmds = true,
   sort_method = 'severity',
+  scope = 'line',
   highlights = {
     error = "DiagnosticFloatingError",
     warn = "DiagnosticFloatingWarn",

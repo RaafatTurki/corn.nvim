@@ -40,7 +40,7 @@ M.toggle_hide = function()
 end
 
 M.render = function(items)
-
+  -- sorting
   if config.opts.sort_method == 'column' then
     table.sort(items, function(a, b) return a.col < b.col end)
   elseif config.opts.sort_method == 'column_reverse' then
@@ -50,11 +50,11 @@ M.render = function(items)
     -- table.sort(items, function(a, b) return a.severity < b.severity end)
   elseif config.opts.sort_method == 'severity_reverse' then
     table.sort(items, function(a, b) return a.severity > b.severity end)
+  elseif config.opts.sort_method == 'line_number' then
+    table.sort(items, function(a, b) return a.lnum < b.lnum end)
+  elseif config.opts.sort_method == 'line_number_reverse' then
+    table.sort(items, function(a, b) return a.lnum > b.lnum end)
   end
-
-  -- clear buffer
-  -- vim.api.nvim_buf_set_lines(M.buf, 0, -1, false, {})
-  -- vim.api.nvim_buf_clear_namespace(M.bufnr, M.ns, 0, -1)
 
   local item_lines = {}
   local longest_line_len = 1
@@ -93,7 +93,11 @@ M.render = function(items)
       if j == #message_lines then
         append_to_line(' ' .. item.code .. '', 'Folded')
         append_to_line(' ' .. item.source, 'Comment')
-        append_to_line(' col:' .. item.col, 'Comment')
+        if config.opts.scope == 'line' then
+          append_to_line(' ' .. ':' .. item.col, 'Comment')
+        elseif config.opts.scope == 'file' then
+          append_to_line(' ' .. item.lnum+1 .. ':' .. item.col, 'Comment')
+        end
       end
 
       -- record the longest line length for later use
@@ -104,7 +108,7 @@ M.render = function(items)
   end
 
   -- calculate visibility
-  if 
+  if
     -- items not zero
     not M.is_hidden
     -- user didnt hide it

@@ -2,9 +2,16 @@ local M = {}
 
 local config = require 'corn.config'
 
-M.get_current_line_diagnostic_items = function()
+M.get_diagnostic_items = function()
   local lnum = vim.fn.line('.') - 1
-  local diagnostics = vim.diagnostic.get(0, { lnum = lnum })
+
+  local diagnostics = {}
+  if config.opts.scope == 'line' then
+    diagnostics = vim.diagnostic.get(0, { lnum = lnum })
+  elseif config.opts.scope == 'file' then
+    diagnostics = vim.diagnostic.get(0, {})
+  end
+
   local items = {}
 
   for i, diag in ipairs(diagnostics) do
@@ -12,6 +19,7 @@ M.get_current_line_diagnostic_items = function()
       message = diag.message,
       severity = diag.severity or vim.diagnostic.severity.ERROR,
       col = diag.col,
+      lnum = diag.lnum,
       source = diag.source or '',
       code = diag.code or '',
     })
