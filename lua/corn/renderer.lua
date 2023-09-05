@@ -1,4 +1,5 @@
 local utils = require 'corn.utils'
+local config = require 'corn.config'
 
 local M = {}
 
@@ -37,6 +38,18 @@ M.toggle_hide = function()
 end
 
 M.render = function(items)
+
+  if config.opts.sort_method == 'column' then
+    table.sort(items, function(a, b) return a.col < b.col end)
+  elseif config.opts.sort_method == 'column_reverse' then
+    table.sort(items, function(a, b) return a.col > b.col end)
+  elseif config.opts.sort_method == 'severity' then
+    -- NOTE not needed since items already come ordered this way
+    -- table.sort(items, function(a, b) return a.severity < b.severity end)
+  elseif config.opts.sort_method == 'severity_reverse' then
+    table.sort(items, function(a, b) return a.severity > b.severity end)
+  end
+
   -- clear buffer
   -- vim.api.nvim_buf_set_lines(M.buf, 0, -1, false, {})
   -- vim.api.nvim_buf_clear_namespace(M.bufnr, M.ns, 0, -1)

@@ -3,6 +3,7 @@ local M = {}
 -- default config
 M.default_opts = {
   auto_cmds = true,
+  sort_method = 'severity',
   highlights = {
     error = "DiagnosticFloatingError",
     warn = "DiagnosticFloatingWarn",

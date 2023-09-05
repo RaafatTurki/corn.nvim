@@ -34,7 +34,10 @@ or their vim cmds
 require 'corn'.setup {
   -- enable plugin auto commands
   auto_cmds = true,
-  
+
+  -- sorts diagnostics according to one of `severity`, `severity_reverse`, `column` or `column_reverse`
+  sort_method = 'severity',
+
   -- highlights to use for each diagnostic severity level
   highlights = {
     error = "DiagnosticFloatingError",
