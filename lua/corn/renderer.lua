@@ -132,11 +132,11 @@ M.render = function(items)
     M.win = vim.api.nvim_open_win(M.bufnr, false, M.make_win_cfg(longest_line_len, #item_lines))
     -- vim.api.nvim_win_set_option(M.win, 'winblend', 50)
     vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, item_lines)
-    vim.api.nvim_win_set_hl_ns(M.win, M.ns)
+    -- vim.api.nvim_win_set_hl_ns(M.win, M.ns)
   elseif M.win then
     vim.api.nvim_win_set_config(M.win, M.make_win_cfg(longest_line_len, #item_lines))
     vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, item_lines)
-    vim.api.nvim_win_set_hl_ns(M.win, M.ns)
+    -- vim.api.nvim_win_set_hl_ns(M.win, M.ns)
   end
   
   -- apply highlights
