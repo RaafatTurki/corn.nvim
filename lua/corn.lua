@@ -36,6 +36,7 @@ end
 -- TODO: make a single Corn commands with autocompleted sub commands
 function M.toggle()
   renderer.toggle_hide()
+  M.render()
 end
 vim.api.nvim_create_user_command("CornToggle", M.toggle, {})
 
