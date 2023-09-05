@@ -53,8 +53,31 @@ require 'corn'.setup {
     hint = "H",
     info = "I",
   },
+
+  -- a hook that executes each time corn is toggled. the current state is provided via `is_hidden`
+  on_toggle = function(is_hidden)
+    -- custom logic goes here
+  end,
 }
 ```
+
+## Tips
+<details>
+<summary> virtual text diagnostics visiblity </summary>
+
+enable virtual text diagnostics when corn is off and disable it when it's on
+```lua
+-- ensure virtual_text diags are disabled
+vim.diagnostic.config { virtual_text = false }
+
+-- toggle virtual_text diags when corn is toggled
+require 'corn'.setup {
+  on_toggle = function(is_hidden)
+    vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+  end
+}
+```
+</details>
 
 ## Plans
 - [ ] Add a custom renderering config opt for both the window and line contents

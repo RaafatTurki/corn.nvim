@@ -16,6 +16,8 @@ M.default_opts = {
     hint = "H",
     info = "I",
   },
+  on_toggle = function(is_hidden)
+  end,
 }
 
 M.opts = {}
