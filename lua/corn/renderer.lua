@@ -57,19 +57,29 @@ M.render = function(items)
   -- assemble item lines
   for i, item in ipairs(items) do
     -- splitting messages by \n and adding each as a separate line
-    for j, message_line in ipairs(vim.fn.split(item.message, '\n')) do
+    local message_lines = vim.fn.split(item.message, '\n')
+    for j, message_line in ipairs(message_lines) do
       local line = ""
 
       function append_to_line(text, hl)
-        insert_hl_segment(hl, i-1, #line, #line + #text)
+        insert_hl_segment(hl, #item_lines + j-1, #line, #line + #text)
         line = line .. text
       end
 
-      append_to_line(utils.diag_severity_to_icon(item.severity), utils.diag_severity_to_hl_group(item.severity))
+      -- icon on first message_line, put and ' ' on the rest
+      if j == 1 then
+        append_to_line(utils.diag_severity_to_icon(item.severity), utils.diag_severity_to_hl_group(item.severity))
+      else
+        append_to_line(' ', utils.diag_severity_to_hl_group(item.severity))
+      end
+      -- message_line content
       append_to_line(' ' .. message_line, utils.diag_severity_to_hl_group(item.severity))
-      append_to_line(' ' .. item.code .. '', 'Folded')
-      append_to_line(' ' .. item.source, 'Comment')
-      append_to_line(' col:' .. item.col, 'Comment')
+      -- extra info on the last line only
+      if j == #message_lines then
+        append_to_line(' ' .. item.code .. '', 'Folded')
+        append_to_line(' ' .. item.source, 'Comment')
+        append_to_line(' col:' .. item.col, 'Comment')
+      end
 
       -- record the longest line length for later use
       if #line > longest_line_len then longest_line_len = #line end
@@ -100,12 +110,12 @@ M.render = function(items)
       M.win = nil
     end
   elseif not M.win then
-    M.win = vim.api.nvim_open_win(M.bufnr, false, M.make_win_cfg(longest_line_len, #items))
+    M.win = vim.api.nvim_open_win(M.bufnr, false, M.make_win_cfg(longest_line_len, #item_lines))
     -- vim.api.nvim_win_set_option(M.win, 'winblend', 50)
     vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, item_lines)
     vim.api.nvim_win_set_hl_ns(M.win, M.ns)
   elseif M.win then
-    vim.api.nvim_win_set_config(M.win, M.make_win_cfg(longest_line_len, #items))
+    vim.api.nvim_win_set_config(M.win, M.make_win_cfg(longest_line_len, #item_lines))
     vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, item_lines)
     vim.api.nvim_win_set_hl_ns(M.win, M.ns)
   end
