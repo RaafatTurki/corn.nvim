@@ -78,7 +78,7 @@ M.render = function(items)
       local line = ""
 
       function append_to_line(text, hl)
-        insert_hl_segment(hl, #item_lines + j-1, #line, #line + #text)
+        insert_hl_segment(hl, #item_lines, #line, #line + #text)
         line = line .. text
       end
 
