@@ -57,6 +57,7 @@ M.render = function(items)
   end
 
   local item_lines = {}
+  local max_item_lines_count = vim.api.nvim_win_get_height(0)
   local longest_line_len = 1
   local hl_segments = {}
 
@@ -104,8 +105,18 @@ M.render = function(items)
       if #line > longest_line_len then longest_line_len = #line end
       -- insert the entire line
       table.insert(item_lines, line)
+
+      -- vertical truncation
+      if #item_lines == max_item_lines_count-1 then
+        line = ""
+        -- local remaining_lines_count = item_lines_that_would_have_been_rendererd_if_there_was_enough_space_count - #item_lines
+        append_to_line("... and more", "Folded")
+        table.insert(item_lines, line)
+        goto break_assemble_item_lines
+      end
     end
   end
+  ::break_assemble_item_lines::
 
   -- calculate visibility
   if
@@ -115,7 +126,6 @@ M.render = function(items)
     and #items ~= 0
     -- can fit in the width and height of the parent window
     and vim.api.nvim_win_get_width(0) >= longest_line_len + 2 -- because of the borders
-    and vim.api.nvim_win_get_height(0) >= #items
   then
     M.is_visible = true
   else
