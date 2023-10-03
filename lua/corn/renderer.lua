@@ -6,8 +6,8 @@ local M = {}
 M.bufnr = nil
 M.ns = nil
 M.win = nil
-M.is_visible = false
-M.is_hidden = false
+M.is_visible = false -- used to determine if the window can be displayed
+M.is_hidden = false -- user controlled hiding toggle
 
 M.make_win_cfg = function(width, height)
   return {
@@ -33,8 +33,12 @@ M.setup = function()
   M.ns = vim.api.nvim_create_namespace('corn')
 end
 
-M.toggle_hide = function()
-  M.is_hidden = not M.is_hidden
+M.toggle = function(state)
+  if state ~= nil then
+    M.is_hidden = not state
+  else
+    M.is_hidden = not M.is_hidden
+  end
 
   config.opts.on_toggle(M.is_hidden)
 end
