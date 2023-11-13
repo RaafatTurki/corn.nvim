@@ -45,6 +45,9 @@ require 'corn'.setup {
   -- sets the scope to be searched for diagnostics, must be one of `line` or `file`
   scope = 'line',
 
+  -- shorten the text of a diagnosis. The values it can receive are 'true' or 'a numeric value'
+  truncate_message = true,
+
   -- highlights to use for each diagnostic severity level
   highlights = {
     error = "DiagnosticFloatingError",

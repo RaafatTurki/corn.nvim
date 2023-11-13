@@ -11,6 +11,7 @@ M.default_opts = {
     info = "DiagnosticFloatingInfo",
     hint = "DiagnosticFloatingHint",
   },
+  truncate_message = true,
   icons = {
     error = "E",
     warn = "W",
