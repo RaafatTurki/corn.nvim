@@ -74,8 +74,25 @@ M.render = function(items)
     })
   end
 
+  local feat_truncated_message = config.opts.truncate_message
+
   -- assemble item lines
   for i, item in ipairs(items) do
+    -- truncate the diagnostic text !feat:
+    local approx_max_width_win = vim.api.nvim_win_get_width(0)
+    local width_limit = approx_max_width_win - 45
+    local truncated_message = nil
+
+    if feat_truncated_message == true then
+      if string.len(item.message) > width_limit then
+        truncated_message = string.sub(item.message, 1, width_limit) .. "..."
+        item.message = truncated_message
+      end
+    elseif type(feat_truncated_message) == 'number' then
+      truncated_message = string.sub(item.message, 1, feat_truncated_message) .. "..."
+      item.message = truncated_message
+    end
+
     -- splitting messages by \n and adding each as a separate line
     local message_lines = vim.fn.split(item.message, '\n')
     for j, message_line in ipairs(message_lines) do
@@ -152,7 +169,7 @@ M.render = function(items)
     vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, item_lines)
     -- vim.api.nvim_win_set_hl_ns(M.win, M.ns)
   end
-  
+
   -- apply highlights
   for i, hl_segment in ipairs(hl_segments) do
     vim.api.nvim_buf_add_highlight(M.bufnr, M.ns, hl_segment.hl_group, hl_segment.lnum, hl_segment.col, hl_segment.end_col)
