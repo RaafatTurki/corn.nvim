@@ -2,22 +2,35 @@ local M = {}
 
 -- default config
 M.default_opts = {
+  ---@type boolean
   auto_cmds = true,
+
+  ---@type string
   sort_method = 'severity',
+
+  ---@type string
   scope = 'line',
+
+  ---@type { error: string, warn: string, hint: string, info: string }
   highlights = {
     error = "DiagnosticFloatingError",
     warn = "DiagnosticFloatingWarn",
     info = "DiagnosticFloatingInfo",
     hint = "DiagnosticFloatingHint",
   },
+
+  ---@type boolean | number
   truncate_message = true,
+
+  ---@type { error: string, warn: string, hint: string, info: string }
   icons = {
     error = "E",
     warn = "W",
     hint = "H",
     info = "I",
   },
+
+  ---@type function(boolean) nil
   on_toggle = function(is_hidden)
   end,
 }
