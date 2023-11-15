@@ -1,5 +1,6 @@
 local M = {}
 
+require 'corn.types'
 local config = require 'corn.config'
 
 M.get_diagnostic_items = function()
@@ -15,14 +16,17 @@ M.get_diagnostic_items = function()
   local items = {}
 
   for i, diag in ipairs(diagnostics) do
-    table.insert(items, {
+    ---@type Corn.Item
+    local item = {
       message = diag.message,
       severity = diag.severity or vim.diagnostic.severity.ERROR,
       col = diag.col,
       lnum = diag.lnum,
       source = diag.source or '',
       code = diag.code or '',
-    })
+    }
+
+    table.insert(items, item)
   end
 
   return items
