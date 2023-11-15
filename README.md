@@ -45,9 +45,6 @@ require 'corn'.setup {
   -- sets the scope to be searched for diagnostics, must be one of `line` or `file`
   scope = 'line',
 
-  -- shorten the text of a diagnosis. The values it can receive are 'true' or 'a numeric value'
-  truncate_message = true,
-
   -- highlights to use for each diagnostic severity level
   highlights = {
     error = "DiagnosticFloatingError",
@@ -63,6 +60,12 @@ require 'corn'.setup {
     hint = "H",
     info = "I",
   },
+
+  -- a preprocessor function that takes a raw Corn.Item and returns it after modification, could be used for truncation or other purposes
+  item_preprocess_func = function(item)
+    -- the default truncation logic is here ...
+    return item
+  end,
 
   -- a hook that executes each time corn is toggled. the current state is provided via `is_hidden`
   on_toggle = function(is_hidden)
@@ -89,6 +92,19 @@ require 'corn'.setup {
 ```
 </details>
 
+<details>
+<summary> disable truncation </summary>
+
+disable the default truncation which is implemented inside item_preprocess_func
+```lua
+-- set item_preprocess_func to return the item unmodified
+require 'corn'.setup {
+  item_preprocess_func = function(item)
+    return item
+  end
+}
+```
+</details>
+
 ## Plans
-- [ ] Add a custom renderering config opt for both the window and line contents
-- [ ] Add a truncated/squashed rendering mode when there isn't enough space
+- [ ] Add a component based custom render function for both window opts and text rendering

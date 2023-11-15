@@ -74,24 +74,9 @@ M.render = function(items)
     })
   end
 
-  local feat_truncated_message = config.opts.truncate_message
-
   -- assemble item lines
   for i, item in ipairs(items) do
-    -- truncate the diagnostic text !feat:
-    local approx_max_width_win = vim.api.nvim_win_get_width(0)
-    local width_limit = approx_max_width_win - 45
-    local truncated_message = nil
-
-    if feat_truncated_message == true then
-      if string.len(item.message) > width_limit then
-        truncated_message = string.sub(item.message, 1, width_limit) .. "..."
-        item.message = truncated_message
-      end
-    elseif type(feat_truncated_message) == 'number' then
-      truncated_message = string.sub(item.message, 1, feat_truncated_message) .. "..."
-      item.message = truncated_message
-    end
+    item = config.opts.item_preprocess_func(item)
 
     -- splitting messages by \n and adding each as a separate line
     local message_lines = vim.fn.split(item.message, '\n')
