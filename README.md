@@ -46,7 +46,7 @@ require 'corn'.setup {
   scope = 'line',
 
   -- sets the style of the border, must be one of `single`, `double`, `rounded`, `solid`, `shadow` or `none`
-  border = 'single',
+  border_style = 'single',
 
   -- highlights to use for each diagnostic severity level
   highlights = {
