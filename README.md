@@ -45,6 +45,9 @@ require 'corn'.setup {
   -- sets the scope to be searched for diagnostics, must be one of `line` or `file`
   scope = 'line',
 
+  -- sets the style of the border, must be one of `single`, `double`, `rounded`, `solid`, `shadow` or `none`
+  border_style = 'single',
+
   -- highlights to use for each diagnostic severity level
   highlights = {
     error = "DiagnosticFloatingError",

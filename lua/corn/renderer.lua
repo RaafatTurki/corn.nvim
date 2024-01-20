@@ -23,7 +23,7 @@ M.make_win_cfg = function(width, height, position, xoff, yoff)
     focusable = false,
     style = 'minimal',
 
-    border = 'single',
+    border = config.opts.border_style,
     -- border = 'none',
   }
 
