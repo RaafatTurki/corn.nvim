@@ -6,8 +6,8 @@ local M = {}
 M.bufnr = nil
 M.ns = nil
 M.win = nil
-M.is_visible = false -- used to determine if the window can be displayed
-M.is_hidden = false -- user controlled hiding toggle
+M.should_render = false -- used to determine if the window can be displayed
+M.state = true -- user controlled hiding toggle
 
 M.make_win_cfg = function(width, height, position, xoff, yoff)
   local cfg = {
@@ -60,14 +60,14 @@ M.setup = function()
   M.ns = vim.api.nvim_create_namespace('corn')
 end
 
-M.toggle = function(state)
+M.set_state = function(state)
   if state ~= nil then
-    M.is_hidden = not state
+    M.state = state
   else
-    M.is_hidden = not M.is_hidden
+    M.state = M.state
   end
 
-  config.opts.on_toggle(M.is_hidden)
+  config.opts.on_toggle(M.state)
 end
 
 M.render = function(items)
@@ -156,16 +156,18 @@ M.render = function(items)
 
   -- calculate visibility
   if
-    -- items not zero
-    not M.is_hidden
-    -- user didnt hide it
-    and #items ~= 0
+    -- user didnt toggle off
+    M.state
+    -- there are items
+    and #items > 0
     -- can fit in the width and height of the parent window
     and vim.api.nvim_win_get_width(0) >= longest_line_len + 2 -- because of the borders
+    -- vim mode isnt blacklisted
+    and vim.tbl_contains(config.opts.blacklisted_modes, vim.api.nvim_get_mode().mode) == false
   then
-    M.is_visible = true
+    M.should_render = true
   else
-    M.is_visible = false
+    M.should_render = false
   end
 
   -- set position and offsets
@@ -176,7 +178,7 @@ M.render = function(items)
   end
 
   -- either close_win, open_win or win_set_config
-  if not M.is_visible then
+  if not M.should_render then
     if M.win then
       vim.api.nvim_win_hide(M.win)
       M.win = nil

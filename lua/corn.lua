@@ -36,7 +36,7 @@ M.setup = function(opts)
   -- TODO: make a single Corn commands with autocompleted sub commands
   function M.toggle(state)
     if state ~= nil then state = state == "on" end
-    renderer.toggle(state)
+    renderer.set_state(state)
     M.render()
   end
   vim.api.nvim_create_user_command("CornToggle", function(opts) M.toggle(opts.fargs[1]) end, { nargs = '?' })

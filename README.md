@@ -48,6 +48,9 @@ require 'corn'.setup {
   -- sets the style of the border, must be one of `single`, `double`, `rounded`, `solid`, `shadow` or `none`
   border_style = 'single',
 
+  -- sets which vim modes corn isn't allowed to render in, should contain strings like 'n', 'i', 'v', 'V' .. etc
+  blacklisted_modes = {},
+
   -- highlights to use for each diagnostic severity level
   highlights = {
     error = "DiagnosticFloatingError",

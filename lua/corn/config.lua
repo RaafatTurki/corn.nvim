@@ -16,6 +16,9 @@ M.default_opts = {
   ---@type string
   border_style = 'single',
 
+  ---@type string[]
+  blacklisted_modes = {},
+
   ---@type { error: string, warn: string, hint: string, info: string, trunc: string }
   highlights = {
     error = "DiagnosticFloatingError",
