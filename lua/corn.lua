@@ -24,6 +24,7 @@ M.setup = function(opts)
       "TextChanged",
       "TextChangedI",
       "WinResized",
+      "ModeChanged",
     }, {
       group = vim.api.nvim_create_augroup("corn", {}),
       callback = function()
