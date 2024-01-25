@@ -19,17 +19,17 @@ require 'corn'.setup()
 
 ## Use
 ```lua
-require 'corn'.toggle(state?)       -- toggle visiblity
-require 'corn'.scope(scope_type)    -- change scope type
+require 'corn'.toggle(state?)       -- toggle visiblity (true, false)
+require 'corn'.scope(scope_type)    -- change scope type ("line", "file")
 require 'corn'.scope_cycle()        -- cycle scope type
 require 'corn'.render()             -- manually invoke the renderer
 ```
 or their vim cmds
 ```
-:CornToggle [on | off]
-:CornScope
-:CornScopeCycle
-:CornRender
+:Corn toggle [on|off]
+:Corn scope <file|line>
+:Corn scope_cycle
+:Corn render
 ```
 
 ## Config
