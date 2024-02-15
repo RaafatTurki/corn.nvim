@@ -19,6 +19,9 @@ M.default_opts = {
   ---@type string[]
   blacklisted_modes = {},
 
+  ---@type DiagnosticSeverity[]
+  blacklisted_severities = {},
+
   ---@type { error: string, warn: string, hint: string, info: string, trunc: string }
   highlights = {
     error = "DiagnosticFloatingError",

@@ -16,17 +16,27 @@ M.get_diagnostic_items = function()
   local items = {}
 
   for i, diag in ipairs(diagnostics) do
+    -- skip blacklisted severities
+    if vim.tbl_contains(config.opts.blacklisted_severities, diag.severity) then
+      goto continue
+    end
+
     ---@type Corn.Item
     local item = {
+      -- non-optional keys
       message = diag.message,
-      severity = diag.severity or vim.diagnostic.severity.ERROR,
       col = diag.col,
       lnum = diag.lnum,
+
+      -- optional keys
+      severity = diag.severity or vim.diagnostic.severity.ERROR,
       source = diag.source or '',
       code = diag.code or '',
     }
 
     table.insert(items, item)
+
+    ::continue::
   end
 
   return items
