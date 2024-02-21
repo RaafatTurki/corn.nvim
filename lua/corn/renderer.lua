@@ -57,6 +57,9 @@ end
 
 M.setup = function()
   M.bufnr = vim.api.nvim_create_buf(false, true)
+  -- Avoid an unecessary memory build-up because we're flushing the buffer 
+  -- every time, growing the undo log a lot at each new render.
+  vim.api.nvim_set_option_value("undolevels", -1, {  buf = M.bufnr })
   M.ns = vim.api.nvim_create_namespace('corn')
 end
 
