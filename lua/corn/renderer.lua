@@ -57,6 +57,8 @@ end
 
 M.setup = function()
   M.bufnr = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_option(M.bufnr, "undolevels", -1)
+
   M.ns = vim.api.nvim_create_namespace('corn')
 end
 
