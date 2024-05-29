@@ -75,4 +75,14 @@ M.get_cursor_relative_pos = function()
   return cursor_relative_line, cursor_relative_col
 end
 
+M.tbl_add_reverse_lookup = function(tbl)
+  local reverse_lookup = {}
+
+  for k, v in pairs(tbl) do
+    reverse_lookup[v] = k
+  end
+
+  return reverse_lookup
+end
+
 return M

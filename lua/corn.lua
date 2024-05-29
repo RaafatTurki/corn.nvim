@@ -6,7 +6,7 @@ local logger = require 'corn.logger'
 
 M.corn_augrp = vim.api.nvim_create_augroup("CORN", {})
 local scope_types = { 'line', 'file' }
-local scope_types_lookup = vim.tbl_add_reverse_lookup(scope_types)
+local scope_types_lookup = utils.tbl_add_reverse_lookup(scope_types)
 
 M.setup = function(opts)
   -- apply config opts and exit if validation fails
