@@ -4,7 +4,7 @@ local utils = require 'corn.utils'
 local renderer = require 'corn.renderer'
 local logger = require 'corn.logger'
 
-M.corn_augrp = vim.api.nvim_create_augroup("CORN", {})
+M.augroup = vim.api.nvim_create_augroup("corn", {})
 M.is_setup = false
 local scope_types = { 'line', 'file' }
 local scope_types_lookup = utils.tbl_add_reverse_lookup(scope_types)
@@ -27,7 +27,7 @@ M.setup = function(opts)
       "WinResized",
       "ModeChanged",
     }, {
-        group = vim.api.nvim_create_augroup("corn", {}),
+        group = M.augroup,
         callback = function()
           M.render()
         end
