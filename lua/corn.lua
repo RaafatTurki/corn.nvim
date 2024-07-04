@@ -5,6 +5,7 @@ local renderer = require 'corn.renderer'
 local logger = require 'corn.logger'
 
 M.corn_augrp = vim.api.nvim_create_augroup("CORN", {})
+M.is_setup = false
 local scope_types = { 'line', 'file' }
 local scope_types_lookup = utils.tbl_add_reverse_lookup(scope_types)
 
@@ -69,9 +70,16 @@ M.setup = function(opts)
 
       end,
     })
+
+  M.is_setup = true
 end
 
 function M.toggle(state)
+  if M.is_setup == false then
+    logger.error("can't use corn yet, call setup first")
+    return
+  end
+
   -- on|off to true|false
   if state ~= nil then state = state == "on" end
   renderer.toggle(state)
@@ -79,6 +87,11 @@ function M.toggle(state)
 end
 
 function M.scope(scope_type)
+  if M.is_setup == false then
+    logger.error("can't use corn yet, call setup first")
+    return
+  end
+
   if config.opts.scope == scope_type then
     -- do nothing
   elseif vim.tbl_contains(scope_types, scope_type) then
@@ -90,6 +103,11 @@ function M.scope(scope_type)
 end
 
 function M.scope_cycle()
+  if M.is_setup == false then
+    logger.error("can't use corn yet, call setup first")
+    return
+  end
+
   local curr_scope_type_index = scope_types_lookup[config.opts.scope]
   local new_scope_type_index = curr_scope_type_index + 1
   if new_scope_type_index > #scope_types then new_scope_type_index = 1 end
@@ -98,6 +116,11 @@ function M.scope_cycle()
 end
 
 function M.render()
+  if M.is_setup == false then
+    logger.error("can't use corn yet, call setup first")
+    return
+  end
+
   renderer.render(utils.get_diagnostic_items())
 end
 
