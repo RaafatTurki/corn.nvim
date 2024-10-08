@@ -183,7 +183,9 @@ M.render = function(items)
   -- either close_win, open_win or win_set_config
   if not M.should_render then
     if M.win then
-      vim.api.nvim_win_hide(M.win)
+      if vim.api.nvim_win_is_valid(M.win) then
+        vim.api.nvim_win_hide(M.win)
+      end
       M.win = nil
     end
   elseif not M.win then
